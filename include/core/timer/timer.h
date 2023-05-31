@@ -37,7 +37,7 @@ public:
     template<class Code>
     Timer& run(size_t n, Code&& code) {
 	start();
-	for (auto i = 0; i < n; ++i) {
+	for (auto i = 0ul; i < n; ++i) {
 	    code();
 	}
 	stop(n);

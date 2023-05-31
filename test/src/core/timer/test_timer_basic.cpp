@@ -8,6 +8,9 @@ using namespace core::timer;
 
 TEST(Timer, Basic)
 {
+    Timer t;
+    t.start();
+    t.stop();
 }
 
 int main(int argc, char *argv[])
