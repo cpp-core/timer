@@ -1,27 +1,27 @@
 cmake_minimum_required (VERSION 3.24 FATAL_ERROR)
-project (sort VERSION 0.1 LANGUAGES C CXX ASM)
+project (timer VERSION 0.1 LANGUAGES C CXX ASM)
 
 # Make including this file idempotent
 #
-if(TARGET sort OR TARGET sort::sort)
+if(TARGET timer OR TARGET timer::timer)
   return()
 endif()
 
 # Setup symlinks for this architecture
 #
-# set(SORT_ARCH_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/words/${CMAKE_SYSTEM_PROCESSOR})
-# if (EXISTS ${SORT_ARCH_INCLUDE_DIR})
-#   message("-- sort: Creating architecture symlink to ${CMAKE_SYSTEM_PROCESSOR}")
+# set(TIMER_ARCH_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/words/${CMAKE_SYSTEM_PROCESSOR})
+# if (EXISTS ${TIMER_ARCH_INCLUDE_DIR})
+#   message("-- timer: Creating architecture symlink to ${CMAKE_SYSTEM_PROCESSOR}")
 #   execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
-#     ${SORT_ARCH_INCLUDE_DIR}
+#     ${TIMER_ARCH_INCLUDE_DIR}
 #     ${CMAKE_SOURCE_DIR}/include/words/arch)
 # endif()
 
-# set(SORT_ARCH_SRC_DIR ${CMAKE_SOURCE_DIR}/src/words/${CMAKE_SYSTEM_PROCESSOR})
-# if (EXISTS ${SORT_ARCH_SRC_DIR})
-#   message("-- sort: Creating architecture symlink ${CMAKE_SYSTEM_PROCESSOR}")
+# set(TIMER_ARCH_SRC_DIR ${CMAKE_SOURCE_DIR}/src/words/${CMAKE_SYSTEM_PROCESSOR})
+# if (EXISTS ${TIMER_ARCH_SRC_DIR})
+#   message("-- timer: Creating architecture symlink ${CMAKE_SYSTEM_PROCESSOR}")
 #   execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
-#     ${SORT_ARCH_SRC_DIR}
+#     ${TIMER_ARCH_SRC_DIR}
 #     ${CMAKE_SOURCE_DIR}/src/words/arch)
 # endif()
 
@@ -34,8 +34,8 @@ if(PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
 
   # Options for generating tests and documentation
   #
-  option(SORT_TEST "Generate the tests." ON)
-  option(SORT_DOCS "Generate the docs." OFF)
+  option(TIMER_TEST "Generate the tests." ON)
+  option(TIMER_DOCS "Generate the docs." OFF)
 
   # compile_commands.json
   #
@@ -46,8 +46,8 @@ if(PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
   make_submodule_pull_target()
 
 else()
-  option(SORT_TEST "Generate the tests." OFF)
-  option(SORT_DOCS "Generate the docs." OFF)
+  option(TIMER_TEST "Generate the tests." OFF)
+  option(TIMER_DOCS "Generate the docs." OFF)
 endif()
 
 # Put executables in the top-level binary directory
@@ -56,15 +56,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Output configuration
 #
-message("-- sort: Configuration: ${CMAKE_CURRENT_SOURCE_DIR}")
-message("-- sort: Included from: ${CMAKE_SOURCE_DIR}")
-message("-- sort: Install prefix: ${CMAKE_INSTALL_PREFIX}")
-message("-- sort: test ${SORT_TEST}")
-message("-- sort: docs ${SORT_DOCS}")
+message("-- timer: Configuration: ${CMAKE_CURRENT_SOURCE_DIR}")
+message("-- timer: Included from: ${CMAKE_SOURCE_DIR}")
+message("-- timer: Install prefix: ${CMAKE_INSTALL_PREFIX}")
+message("-- timer: test ${TIMER_TEST}")
+message("-- timer: docs ${TIMER_DOCS}")
 
 # Setup compilation before adding dependencies
 #
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -72,19 +72,9 @@ add_compile_options(-Wall)
 add_compile_options(-g)
 add_compile_options(-O)
 
-add_compile_options(-stdlib=libc++)
-add_link_options(-stdlib=libc++)
-
-# add_compile_options(-fno-omit-frame-pointer)
-# add_compile_options(-fsanitize=address)
-# add_link_options(-fsanitize=address)
-
 # Add our dependencies
 #
-add_stream()
-add_fp()
-add_util()
-add_chrono()
+
 
 # Build the library
 #
@@ -97,7 +87,7 @@ set(ASM_SOURCES
 
 set(FILES)
 foreach(SOURCE ${SOURCES})
-  list(APPEND FILES "src/core/sort/${SOURCE}.cpp")
+  list(APPEND FILES "src/core/timer/${SOURCE}.cpp")
 endforeach()
 
 foreach(SOURCE ${ASM_SOURCES})
@@ -107,30 +97,30 @@ foreach(SOURCE ${ASM_SOURCES})
   endif()
 endforeach()
 
-add_library(sort ${FILES})
-add_library(sort::sort ALIAS sort)
+add_library(timer ${FILES})
+add_library(timer::timer ALIAS timer)
+
+set(nanobench_DIR "/Users/mmelton/opt/lib/nanobench/cmake")
+find_package(nanobench REQUIRED)
 
 # Define the header files for this library.
 #
 file(GLOB_RECURSE PUBLIC_INCLUDE_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} include/*.h)
-target_sources(sort INTERFACE FILE_SET HEADERS BASE_DIRS include FILES ${PUBLIC_INCLUDE_FILES})
+target_sources(timer INTERFACE FILE_SET HEADERS BASE_DIRS include FILES ${PUBLIC_INCLUDE_FILES})
 
-target_include_directories(sort PUBLIC ${GMP_INCLUDE_DIRS})
-target_link_libraries(sort PUBLIC stream::stream fp::fp util::util chrono::chrono)
+target_include_directories(timer PUBLIC ${GMP_INCLUDE_DIRS})
+target_link_libraries(timer PUBLIC)
 
 foreach(prog
-    example0
-    sort0
-    sort1
-    sort2
+    timer0
     )
   add_executable(${prog} src/tools/${prog}.cpp)
-  target_link_libraries(${prog} sort::sort)
+  target_link_libraries(${prog} timer::timer nanobench::nanobench)
 endforeach()
 
 # Optionally configure the tests
 #
-if(SORT_TEST)
+if(TIMER_TEST)
  add_gtest()
  add_subdirectory(test)
 endif()
@@ -143,4 +133,4 @@ endif()
 
 # Installation
 #
-# install_config(sort)
+# install_config(timer)
