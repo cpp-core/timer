@@ -109,6 +109,7 @@ target_link_libraries(timer PUBLIC)
 
 foreach(prog
     timer0
+    timer1
     )
   add_executable(${prog} src/tools/${prog}.cpp)
   target_link_libraries(${prog} timer::timer)
