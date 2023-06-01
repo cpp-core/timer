@@ -1,7 +1,6 @@
 [![Build](https://github.com/cpp-core/timer/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/timer/actions/workflows/build.yaml)
 
 # Synopsis
-
 `core::timer::Timer` is a header-only, micro-timer for modern
 `C++`. The timer is designed to faciliate minimal-overhedad, ad-hoc
 timing of `C++` code including micro-timing down to a single machine
@@ -11,13 +10,11 @@ instruction. The timer is not designed for benchmarking
 for this purpose) nor for detailed performance analysis.
 
 # Basics
-
 The timer has two basic modes:
 - Inovking `run` on isolated code for in vivo measurements.
 - Using `start` and `stop` timer calls for in vitro measurements.
 
 ## In Vivo Example
-
 The `run` method is designed to repeatedly execute isolated code in
 order to measure the average cost per operation. Modern compilers,
 taking advantge of the `C++` standard's "as if" rule, will often
@@ -58,7 +55,6 @@ int main(int argc, const char *argv[]) {
 ```
 
 ## In Vitro Example
-
 The `start` and `stop` methods can be used to instrument code as it
 exists without isolating it to be executed by `run`. On a modern
 platform, each invocation of `start` and `stop` costs tens of clock
