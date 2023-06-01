@@ -62,7 +62,7 @@ cycles, thus, they are designed to be applied to more significant code
 segments.
 
 The following example demonstrates using the `start` and `stop`
-methods function to measure the cost of exclusive or performed in a
+methods to measure the cost of an exclusive or performed in a
 loop. Referencing the `output` variable at the end serves the same
 function as the `doNotOptimizeAway` function in the previous example;
 it forces the compiler to actually do the computation.
