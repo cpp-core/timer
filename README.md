@@ -1,8 +1,17 @@
 [![Build](https://github.com/cpp-core/timer/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/timer/actions/workflows/build.yaml)
 
-`core::timer::Timer` is a simple timer for `C++`.
+`core::timer::Timer` is a header-only, micro-timer for modern `C++`
+designed to faciliate simple, minimal-overhedad, ad-hoc timing of
+`C++` code snippets. `core::timer::Timer` is not designed for
+benchmarking ([benchmark](https://github.com/google/benchmark) or
+[nanobench](https://github.com/martinus/nanobench) are excellent tools
+for this purpose) nor for detailed performance profiling.
 
-## Example
+The timer has two basic modes:
+- Inovking `run` for isolated code over a specified number of iterations for in vivo measurements.
+- Placing `start` and `stop` timer calls around the target code for in vitro measurements.
+
+## Example (in vivo)
 
 ```c++
 #include <iomanip>
@@ -15,8 +24,8 @@ int main(int argc, const char *argv[]) {
 
     unsigned int output{};
     auto ns = timer::Timer().run(1'000'000, [&]() {
-	output += 1;
-	timer::doNotOptimizeAway(output);
+	    output += 1;
+	    timer::doNotOptimizeAway(output);
     }).elapsed_per_iteration();
     
     std::cout << std::setprecision(2) << ns << " nanoseconds per operation" << std::endl;
