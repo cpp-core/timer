@@ -124,9 +124,9 @@ endif()
 
 # Optionally configure the documentation
 #
-# if(TIMER_DOCS)
-#   add_subdirectory(docs)
-# endif()
+if(TIMER_DOCS)
+  add_subdirectory(docs)
+endif()
 
 # Installation
 #
