@@ -1,9 +1,7 @@
 [![Build](https://github.com/cpp-core/timer/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/timer/actions/workflows/build.yaml) [![Docs](https://github.com/cpp-core/timer/actions/workflows/docs.yaml/badge.svg)](https://github.com/cpp-core/timer/actions/workflows/docs.yaml)
 
-[Documentation](https://cpp-core.github.io/timer/)
-
-# Synopsis
-`core::timer::Timer` is a header-only, micro-timer for modern
+# A Timer for Modern C++
+`core::timer::Timer` is a header-only timer for modern
 `C++`. The timer is designed to faciliate minimal-overhedad, ad-hoc
 timing of `C++` code including micro-timing down to a single machine
 instruction. The timer is not designed for benchmarking
@@ -11,7 +9,10 @@ instruction. The timer is not designed for benchmarking
 [nanobench](https://github.com/martinus/nanobench) are excellent tools
 for this purpose) nor for detailed performance analysis.
 
-# Basics
+Continue on for a brief tour, or you can read the full
+[documentation](https://cpp-core.github.io/timer/).
+
+# Brief Tour
 The timer has two basic modes:
 - Inovking `run` on isolated code for in vivo measurements.
 - Using `start` and `stop` timer calls for in vitro measurements.
