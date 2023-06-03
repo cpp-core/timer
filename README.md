@@ -1,4 +1,6 @@
-[![Build](https://github.com/cpp-core/timer/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/timer/actions/workflows/build.yaml)
+[![Build](https://github.com/cpp-core/timer/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/timer/actions/workflows/build.yaml) [![Docs](https://github.com/cpp-core/timer/actions/workflows/docs.yaml/badge.svg)](https://github.com/cpp-core/timer/actions/workflows/docs.yaml)
+
+[Documentation](https://cpp-core.github.io/timer/)
 
 # Synopsis
 `core::timer::Timer` is a header-only, micro-timer for modern
